@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-DATABASE_URL= os.getenv("DATABASE_URL","sqllite:///app.db")
+DATABASE_URL= os.getenv("DATABASE_URL","sqlite:///app.db")
 engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
@@ -90,3 +90,4 @@ def delete_patient(id):
 if __name__ == "__main__":
 
     app.run(debug=True, host="0.0.0.0", port=5000)
+
