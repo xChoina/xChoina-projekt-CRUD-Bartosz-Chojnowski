@@ -6,10 +6,10 @@ from models import Base, Patient
 import os
 app = Flask(__name__)
 CORS(app)
-Base.metadata.create_all(engine)
+
 DATABASE_URL= os.getenv("DATABASE_URL","sqllite:///app.db")
 engine = create_engine(DATABASE_URL)
-
+Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -88,4 +88,5 @@ def delete_patient(id):
     return jsonify({"message":"Patient deleted succesfully"})
 
 if __name__ == "__main__":
+
     app.run(debug=True, host="0.0.0.0", port=5000)
