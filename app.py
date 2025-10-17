@@ -3,12 +3,10 @@ from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Patient
-import os
 app = Flask(__name__)
 CORS(app)
 
-DATABASE_URL= os.getenv("DATABASE_URL","sqlite:///app.db")
-engine = create_engine(DATABASE_URL)
+engine = create_engine("sqlite:///app.db")
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -29,7 +27,7 @@ def get_patients():
             "pressure":p.pressure,
             "temperature":p.temperature
         }
-        #pyt
+        
         for p in patients
     ]
     session.close()
@@ -90,4 +88,5 @@ def delete_patient(id):
 if __name__ == "__main__":
 
     app.run(debug=True, host="0.0.0.0", port=5000)
+
 
