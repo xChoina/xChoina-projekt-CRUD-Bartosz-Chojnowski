@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacjenci</title>
+   <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Dodaj Pacjenta: </h2>
+    <form id="patientForm">
+        <input type="text" id="name" placeholder="Imię" required>
+        <input type="text" id="surename" placeholder="Nazwisko" required>
+        <input type="number" id="age" placeholder="Wiek" required>
+        <input type="number" id="pressure" placeholder="Ciśnienie" required>
+        <input type="number" id="temperature" placeholder="Temperatura" step="0.1" required>
+        <button type="submit">Dodaj</button>
+    </form>
+    <h1>LISTA PACJENTÓW: </h1>
+    <ul id="patientList"></ul>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
