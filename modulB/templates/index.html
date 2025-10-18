@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Książki CRUD</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>📚 Lista książek</h1>
+  <form id="form">
+    <input type="hidden" id="id">
+    <input type="text" id="tytul" placeholder="Tytuł" required>
+    <input type="text" id="imie_autora" placeholder="Imię autora">
+    <input type="text" id="nazwisko_autora" placeholder="Nazwisko autora">
+    <input type="number" id="rok" placeholder="Rok wydania">
+    <input type="text" id="wydawnictwo" placeholder="Wydawnictwo">
+    <input type="number" id="cena" placeholder="Cena">
+    <button type="submit">💾 Zapisz</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Tytuł</th><th>Imię autora</th><th>Nazwisko autora</th><th>Rok</th><th>Wydawnictwo</th><th>Cena</th><th>Data dodania</th><th>Akcje</th></tr>
+    </thead>
+    <tbody id="lista"></tbody>
+  </table>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
