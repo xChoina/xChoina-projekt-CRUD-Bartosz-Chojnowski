@@ -10,7 +10,7 @@ CORS(app)
 engine = create_engine("mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina")
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
-session = Session()
+
 
 @app.route("/")
 def index():
@@ -18,6 +18,7 @@ def index():
 
 @app.route("/api/patients", methods=["GET"])
 def get_patients():
+    session = Session()
     patients = session.query(Patient).all()
     result = [
         {
@@ -28,13 +29,14 @@ def get_patients():
             "pressure":p.pressure,
             "temperature":p.temperature
         }
-        #pyt
+
         for p in patients
     ]
     session.close()
     return jsonify(result)
 @app.route("/api/patients/<int:id>", methods=["GET"])
 def get_patient(id):
+    session = Session()
     patient = session.get(Patient,id)
     result = {
             "id": patient.id,
@@ -49,6 +51,7 @@ def get_patient(id):
 
 @app.route("/api/patients", methods=["POST"])
 def add_patient():
+    session = Session()
     data = request.get_json()
     new_patient = Patient(
         name=data["name"],
@@ -63,6 +66,7 @@ def add_patient():
 
 @app.route("/api/patients/<int:id>", methods=["PUT"])
 def update_patient(id):
+    session = Session()
     data = request.json
     patient = session.get(Patient,id)
     if not patient:
@@ -78,6 +82,7 @@ def update_patient(id):
 
 @app.route("/api/patients/<int:id>", methods=["DELETE"])
 def delete_patient(id):
+    session = Session()
     patient = session.query(Patient).get(id)
     if not patient:
         return jsonify({"error":"Patient not found"}), 404
