@@ -27,7 +27,9 @@ def get_patients():
             "surename":p.surename,
             "age":p.age,
             "pressure":p.pressure,
-            "temperature":p.temperature
+            "temperature":p.temperature,
+            "pulse":p.pulse, #nowe pole tętno
+            "pesel":p.pesel #nowe pole pesel
         }
 
         for p in patients
@@ -44,7 +46,9 @@ def get_patient(id):
             "surename": patient.surename,
             "age": patient.age,
             "pressure": patient.pressure,
-            "temperature": patient.temperature
+            "temperature": patient.temperature,
+            "pulse":p.pulse, #nowe pole tętno
+            "pesel":p.pesel #nowe pole pesel
         }
     session.close()
     return jsonify(result)
@@ -58,7 +62,9 @@ def add_patient():
         surename=data["surename"],
         age=data["age"],
         pressure=data["pressure"],
-        temperature=data["temperature"]
+        temperature=data["temperature"],
+        pulse=data["pulse"], #nowe pole tętno
+        pesel=data["pesel"] #nowe pole pesel
     )
     session.add(new_patient)
     session.commit()
@@ -76,6 +82,8 @@ def update_patient(id):
     patient.age = data["age"]
     patient.pressure = data["pressure"]
     patient.temperature = data["temperature"]
+    patient.pulse=data["pulse"] #nowe pole tętno
+    patient.pesel=data["pesel"] #nowe pole pesel
     session.commit()
     session.close()
     return jsonify({"message":"Patient updated succesfully"})
