@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <style>
+        body { font-family: Arial; background: #eef3f7; margin: 0; text-align: center; }
+        nav { background: #0077cc; color: white; padding: 10px; font-size: 20px; }
+        .box { background: white; max-width: 350px; margin: 40px auto; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        input, select, button { width: 90%; padding: 8px; margin: 8px 0; }
+        button { background: #0077cc; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #005fa3; }
+    </style>
+</head>
+<body>
+    <nav>System Pacjentów</nav>
+
+    <div class="box">
+        <h3>Zaloguj się</h3>
+        <form id="loginForm">
+            <input type="text" id="login_username" placeholder="Użytkownik" required>
+            <input type="password" id="login_password" placeholder="Hasło" required>
+            <button type="submit">Zaloguj</button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h3>Rejestracja</h3>
+        <form id="registerForm">
+            <input type="text" id="reg_username" placeholder="Użytkownik" required>
+            <input type="password" id="reg_password" placeholder="Hasło" required>
+            <select id="reg_role">
+                <option value="user">Użytkownik</option>
+                <option value="admin">Administrator</option>
+            </select>
+            <button type="submit">Zarejestruj</button>
+        </form>
+    </div>
+
+    <script src="/static/home.js"></script>
+</body>
+</html>
