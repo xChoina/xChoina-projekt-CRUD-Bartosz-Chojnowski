@@ -23,6 +23,16 @@ def login_required(view):
         return view(*args, **kwargs)
     return decorated_function
 
+def admin_required(view):
+    @wraps(view)
+    def decorated_function(*args, **kwargs):
+        if "user" not in session:
+            return jsonify({"error": "Please login first"}), 401
+        if session.get("role") != "admin":
+            return jsonify({"error": "Admin access required"}), 403
+        return view(*args, **kwargs)
+    return decorated_function
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -38,7 +48,7 @@ def index():
     return  render_template("index.html")
 
 @app.route("/api/patients", methods=["GET"])
-@login_required
+@admin_required
 def get_patients():
     session_db = Session()
     patients = session_db.query(Patient).all()
@@ -59,7 +69,7 @@ def get_patients():
     session_db.close()
     return jsonify(result)
 @app.route("/api/patients/<int:id>", methods=["GET"])
-@login_required
+@admin_required
 def get_patient(id):
     session_db = Session()
     patient = session_db.get(Patient,id)
@@ -90,13 +100,18 @@ def add_patient():
         pulse=data["pulse"], #nowe pole tętno
         pesel=data["pesel"] #nowe pole pesel
     )
+    error = new_patient.validate()
+    if error:
+        session_db.close()
+        return jsonify({"error": error}), 400
+
     session_db.add(new_patient)
     session_db.commit()
     session_db.close()
     return jsonify({"message": "Patients added!"}), 201
 
 @app.route("/api/patients/<int:id>", methods=["PUT"])
-@login_required
+@admin_required
 def update_patient(id):
     session_db = Session()
     data = request.json
@@ -110,12 +125,16 @@ def update_patient(id):
     patient.temperature = data["temperature"]
     patient.pulse=data["pulse"] #nowe pole tętno
     patient.pesel=data["pesel"] #nowe pole pesel
+    error = patient.validate()
+    if error:
+        session_db.close()
+        return jsonify({"error": error}), 400
     session_db.commit()
     session_db.close()
     return jsonify({"message":"Patient updated succesfully"})
 
 @app.route("/api/patients/<int:id>", methods=["DELETE"])
-@login_required
+@admin_required
 def delete_patient(id):
     session_db = Session()
     patient = session_db.query(Patient).get(id)
@@ -133,13 +152,25 @@ def register():
     loginn = data.get('username')
     password = data.get('password')
     role = data.get('role')
+    if not loginn or not password:
+        session_db.close()
+        return jsonify({"error": "Username and password are required"}), 400
     if session_db.query(User).filter_by(login=loginn).first():
         session_db.close()
-        return jsonify({"error": "User already exists"}), 400
-
-    if len(password) < 7:
+        return jsonify({
+            "statusCode": 409,
+            "error": "Conflict",
+            "fieldErrors":[{
+                "field": "login",
+                "code": "DUPLICATE",
+                "message": "Username is already registered"
+            }]
+        }),409
+    temp_user = User(login=loginn, role=role)
+    error = temp_user.validate(password=password)
+    if error:
         session_db.close()
-        return jsonify({"error": "Password must contain at least 7 characters"}), 400
+        return jsonify(error), 400
 
     new_user = User(login=loginn, role=role)
     new_user.set_password(password)
@@ -159,6 +190,8 @@ def login():
         session_db.close()
         return jsonify({"error": "Incorrect login or password"}), 401
     session["user"]= user.login
+    session["role"]= user.role
+    session.permanent = True
     session_db.close()
     return jsonify({
         "message": "Login successful",
