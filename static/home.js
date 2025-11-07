@@ -21,7 +21,6 @@ function clearErrors(formId) {
     document.querySelectorAll(`#${formId} .error`).forEach(e => e.remove());
 }
 
-// 🔹 LOGOWANIE
 document.getElementById('loginForm').addEventListener('submit', async e => {
     e.preventDefault();
     clearErrors('loginForm');
@@ -56,7 +55,6 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
     }
 });
 
-// 🔹 REJESTRACJA
 document.getElementById('registerForm').addEventListener('submit', async e => {
     e.preventDefault();
     clearErrors('registerForm');
