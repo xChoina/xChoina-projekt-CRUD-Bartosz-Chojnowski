@@ -49,4 +49,4 @@ jobs:
       - name: Run smoke test
         run: |
           echo "Running smoke test..."
-          curl -f https://twoja_aplikacja_url/health || exit 1
+          curl -f https://xChoina.pythonanywhere.com/health || exit 1
