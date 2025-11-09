@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask, request, jsonify, render_template, session
 from flask_cors import CORS
 from sqlalchemy import create_engine
@@ -83,6 +84,9 @@ def get_patients():
 def get_patient(id):
     session_db = Session()
     patient = session_db.get(Patient,id)
+    if not patient:
+        session_db.close()
+        return jsonify({"error": "Patient not found"}), 404
     result = {
             "id": patient.id,
             "name": patient.name,
