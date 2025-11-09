@@ -14,8 +14,26 @@ def test_health_endpoint(client):
     assert response.status_code == 200
 
 def test_post_endpoint(client):
-    response = client.post('/api/patients', json={})
-    assert response.status_code == 400
+    client.post("/register", json={
+        "username": "test_admin",
+        "password": "test123",
+        "role": "admin"
+    })
+    client.post("/login", json={
+        "username": "test_admin",
+        "password": "test123"
+    })
+    response = client.post('/api/patients', json={
+        "name": "Test",
+        "surname": "Patient",
+        "age": 30,
+        "pressure": "120",
+        "temperature": 36.6,
+        "pulse": 70,
+        "pesel": "12345678901"
+    })
+    assert response.status_code == 201
+
 
 def test_get_endpoint(client):
     response = client.get('/api/patients/9999')
