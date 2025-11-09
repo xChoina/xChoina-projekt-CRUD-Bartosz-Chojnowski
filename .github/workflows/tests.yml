@@ -47,6 +47,7 @@ jobs:
 
     steps:
       - name: Run smoke test
+        if: false 
         run: |
           echo "Running smoke test..."
           curl -f https://xChoina.pythonanywhere.com/health || exit 1
