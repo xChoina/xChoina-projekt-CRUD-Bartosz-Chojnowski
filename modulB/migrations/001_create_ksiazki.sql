@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS ksiazki (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  tytul VARCHAR(255) NOT NULL,
-  imie_autora VARCHAR(100),
-  nazwisko_autora VARCHAR(100),
-  rok_wydania INT,
-  data_dodania DATETIME DEFAULT CURRENT_TIMESTAMP
-);
