@@ -1,5 +1,7 @@
 import pytest
 from app import app
+import os
+os.environ["TESTING"] = "1"
 @pytest.fixture
 def client():
     app.config['TESTING'] = '1'
