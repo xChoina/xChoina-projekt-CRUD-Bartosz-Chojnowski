@@ -1,6 +1,9 @@
+import os
+
 from flask import Flask, request, jsonify, render_template, session
 from flask_cors import CORS
 from sqlalchemy import create_engine
+from sqlalchemy.dialects.mysql import DATETIME
 from sqlalchemy.orm import sessionmaker
 from models import Base, Patient, User
 from datetime import timedelta
@@ -10,8 +13,12 @@ app = Flask(__name__)
 app.secret_key = "bardzo_tajny_kluczyk"
 app.permanent_session_lifetime = timedelta(minutes=30)
 CORS(app, resources={r"/*": {"origins":"*"}})
-
-engine = create_engine("mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina")
+if os.environ.get("TESTING") == "1":
+    DATABASE_URL = "sqlite:///:memory:"
+else:
+    DATEBASE_URL = "mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina"
+    
+engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 
@@ -203,6 +210,10 @@ def login():
 def logout():
     session.pop("user",None)
     return jsonify({"message": "Logout successful"})
+
+@app.route("/health")
+def health():
+    return {"status": "OK"}, 200
 
 
 if __name__ == "__main__":
