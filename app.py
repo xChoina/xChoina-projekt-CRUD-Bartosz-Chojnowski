@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, request, jsonify, render_template, session
 from flask_cors import CORS
 from sqlalchemy import create_engine
@@ -13,11 +12,15 @@ app = Flask(__name__)
 app.secret_key = "bardzo_tajny_kluczyk"
 app.permanent_session_lifetime = timedelta(minutes=30)
 CORS(app, resources={r"/*": {"origins":"*"}})
-if os.environ.get("TESTING") == "1":
+
+
+if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("TESTING") == "1":
+    print("Tryb TEST — używana baza SQLite in-memory")
     DATABASE_URL = "sqlite:///:memory:"
 else:
     DATABASE_URL = "mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina"
-    
+
+
 engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
@@ -218,4 +221,3 @@ def health():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
-
