@@ -16,7 +16,7 @@ CORS(app, resources={r"/*": {"origins":"*"}})
 if os.environ.get("TESTING") == "1":
     DATABASE_URL = "sqlite:///:memory:"
 else:
-    DATEBASE_URL = "mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina"
+    DATABASE_URL = "mysql+pymysql://xChoina:ff83pzMxPhnknNc@xChoina.mysql.pythonanywhere-services.com/xChoina$xchoina"
     
 engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(engine)
@@ -218,3 +218,4 @@ def health():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
