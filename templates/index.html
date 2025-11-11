@@ -13,6 +13,7 @@
         ul { list-style: none; padding: 0; }
         li { background: #eef3f7; margin: 6px 0; padding: 10px; border-radius: 6px; }
         .hidden { display: none; }
+        .error { color: red; font-size: 13px; margin-bottom: 8px;}
     </style>
 </head>
 <body>
@@ -25,18 +26,39 @@
     </nav>
     <main>
 
-
             <h3>Dodaj / Edytuj pacjenta</h3>
-            <form id="patientForm">
-                <input type="text" id="name" placeholder="Imię" required>
-                <input type="text" id="surname" placeholder="Nazwisko" required>
-                <input type="number" id="age" placeholder="Wiek" required>
-                <input type="number" id="pressure" placeholder="Ciśnienie">
-                <input type="number" id="temperature" placeholder="Temperatura" step="0.1">
-                <input type="number" id="pulse" placeholder="Tętno">
-                <input type="text" id="pesel" placeholder="PESEL" required>
-                <button type="submit">Zapisz</button>
-            </form>
+<form id="patientForm">
+    <label>Imię:</label>
+    <input type="text" id="name" placeholder="Imię" required>
+    <div id="error-name" class="error-message error"></div>
+
+    <label>Nazwisko:</label>
+    <input type="text" id="surname" placeholder="Nazwisko" required>
+    <div id="error-surname" class="error-message error"></div>
+
+    <label>Wiek:</label>
+    <input type="number" id="age" placeholder="Wiek" required>
+    <div id="error-age" class="error-message error"></div>
+
+    <label>Ciśnienie:</label>
+    <input type="number" id="pressure" placeholder="Ciśnienie">
+    <div id="error-pressure" class="error-message error"></div>
+
+    <label>Temperatura:</label>
+    <input type="number" id="temperature" placeholder="Temperatura" step="0.1">
+    <div id="error-temperature" class="error-message error"></div>
+
+    <label>Tętno:</label>
+    <input type="number" id="pulse" placeholder="Tętno">
+    <div id="error-pulse" class="error-message error"></div>
+
+    <label>PESEL:</label>
+    <input type="text" id="pesel" placeholder="PESEL" required>
+    <div id="error-pesel" class="error-message error"></div>
+
+    <button type="submit">Zapisz</button>
+</form>
+
        <section id="adminPanel" class="hidden">
             <h3>Lista pacjentów</h3>
         <ul id="patientList"></ul>
