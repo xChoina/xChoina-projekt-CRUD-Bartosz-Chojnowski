@@ -31,7 +31,8 @@ def test_post_endpoint(client):
             "pressure": 120,
             "temperature": 36.6,
             "pulse": 70,
-            "pesel": "12345678901"
+            "pesel": "12345678901",
+            "opis_66726": "To jest opis, do tego podłoga i numer mojego indeksu"
     })
         assert response.status_code == 201
 
@@ -56,4 +57,5 @@ def test_get_endpoint(client):
 def test_delete_patient_unauthorized(client):
     response = client.delete('/api/patients/1')
     assert response.status_code in [401, 403]
+
 
