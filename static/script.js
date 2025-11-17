@@ -73,6 +73,7 @@ document.getElementById('patientForm').addEventListener('submit', async e => {
     const tempStr = document.getElementById('temperature').value;
     const pulseStr = document.getElementById('pulse').value;
     const pesel = document.getElementById('pesel').value.trim();
+    const opis_66726 = document.getElementById('opis_66726').value.trim();
 
     let isValid = true; // Flaga do śledzenia, czy formularz jest poprawny
 
@@ -133,7 +134,8 @@ document.getElementById('patientForm').addEventListener('submit', async e => {
         name, surname, age, pesel, 
         pressure: pressure || null, // Upewnij się, że puste pola są wysyłane jako 'null'
         temperature: temperature || null,
-        pulse: pulse || null
+        pulse: pulse || null,
+        opis_66726: opis.66726
     };
 
     // 7. WYSYŁKA DO SERWERA (API)
@@ -218,7 +220,8 @@ async function loadPatients() {
                     <small>
                         Ciśnienie: ${p.pressure || 'N/A'} | 
                         Temp: ${p.temperature || 'N/A'} | 
-                        Tętno: ${p.pulse || 'N/A'}
+                        Tętno: ${p.pulse || 'N/A'} |
+                        Opis_66726: ${p.opis_66726 || 'N/A}
                     </small>
                 </div>
                 <div>
@@ -277,6 +280,7 @@ async function editPatient(id) {
         document.getElementById('temperature').value = patient.temperature || '';
         document.getElementById('pulse').value = patient.pulse || '';
         document.getElementById('pesel').value = patient.pesel;
+        document.getElementById('opis_66726').value = patient.opis_66726;
 
         editId = id; // Ustaw ID do edycji
         window.scrollTo(0, 0); // Przewiń na górę do formularza
@@ -289,3 +293,4 @@ async function editPatient(id) {
 // Wywołaj funkcję loadPatients() przy starcie strony.
 // Funkcja sama sprawdzi, czy user jest adminem i co ma zrobić.
 loadPatients();
+
