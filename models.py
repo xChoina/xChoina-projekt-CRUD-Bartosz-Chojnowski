@@ -23,9 +23,10 @@ class Patient(Base):
     temperature = Column(Float)
     pulse = Column(Integer)                     #deklaracja kolumny tętno
     pesel = Column(String(11), nullable=False)  #deklaracja kolumny pesel
+    opis_66726 = Column(String(100), nullable=False)
 
     def __repr__(self):
-        return f"<Patient(id={self.id}, name='{self.name} {self.surname}' , pressure={self.pressure} , temperature={self.temperature} , pulse={self.pulse}, pesel={self.pesel} >" #dodanie dwóch nowych pól
+        return f"<Patient(id={self.id}, name='{self.name} {self.surname}' , pressure={self.pressure} , temperature={self.temperature} , pulse={self.pulse}, pesel={self.pesel}, opis={self.opis_66726} >" #dodanie dwóch nowych pól
 
     def validate(self):
 
@@ -91,3 +92,4 @@ class User(Base):
 
 
          return None
+
