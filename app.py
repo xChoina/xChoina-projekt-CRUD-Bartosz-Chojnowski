@@ -72,7 +72,8 @@ def get_patients():
             "pressure":p.pressure,
             "temperature":p.temperature,
             "pulse":p.pulse, #nowe pole tętno
-            "pesel":p.pesel #nowe pole pesel
+            "pesel":p.pesel, #nowe pole pesel
+            "opis_66726":p.opis_66726
         }
 
         for p in patients
@@ -95,7 +96,8 @@ def get_patient(id):
             "pressure": patient.pressure,
             "temperature": patient.temperature,
             "pulse":patient.pulse, #nowe pole tętno
-            "pesel":patient.pesel #nowe pole pesel
+            "pesel":patient.pesel, #nowe pole pesel
+            "opis_66726":patient.opis_66726
         }
     session_db.close()
     return jsonify(result)
@@ -112,7 +114,8 @@ def add_patient():
         pressure=data["pressure"],
         temperature=data["temperature"],
         pulse=data["pulse"], #nowe pole tętno
-        pesel=data["pesel"] #nowe pole pesel
+        pesel=data["pesel"], #nowe pole pesel
+        opis_66726=data["opis_66726"]
     )
     error = new_patient.validate()
     if error:
@@ -139,6 +142,7 @@ def update_patient(id):
     patient.temperature = data["temperature"]
     patient.pulse=data["pulse"] #nowe pole tętno
     patient.pesel=data["pesel"] #nowe pole pesel
+    patient.opis_66726=data["opis_66726"]
     error = patient.validate()
     if error:
         session_db.close()
@@ -225,3 +229,4 @@ def health():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
